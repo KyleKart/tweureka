@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert Projects for Eureka Loader!</title>
+    <meta content="Embed Title" property="og:title" />
+    <meta content="Site Description" property="og:description" />
+    <meta content="https://kylekart.github.io/tweureka/" property="og:url" />
+    <meta content="https://embed.com/embedimage.png" property="og:image" />
+    <meta content="#333333" data-react-helmet="true" name="theme-color" />
+
+    <style>
+        :root {
+            --main-color: #007BFF; /* Default color */
+        }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #222222;
+            color: #ffffff;
+        }
+        h1 {
+            color: #ffffff;
+        }
+        input[type="file"] {
+            margin: 20px 0;
+            padding: 10px;
+            border: 2px solid var(--main-color); /* Changed border color to white */
+            border-radius: 5px;
+            background-color: #333333; /* Changed background color to darker shade */
+            color: #ffffff; /* Changed text color to white */
+            cursor: pointer;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--main-color);
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+        button:not(:disabled):hover {
+            background-color: var(--main-color);
+        }
+        a {
+            color: var(--main-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: darken(var(--main-color), 10%);
+        }
+    </style>
+</head>
+<body>
+    <h1>Convert your Project for the <a href="https://eureka.codingclip.cc/" target="_blank">Eureka Loader</a>!</h1>
+    <input type="file" id="fileInput" accept=".sb3,.pmp">
+    <button id="downloadButton" disabled>Convert Project</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script>
+        document.getElementById('fileInput').addEventListener('change', handleFileSelect);
+        document.getElementById('downloadButton').addEventListener('click', downloadModifiedFile);
+
+        let modifiedBlob;
+        let originalFileName;
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                originalFileName = file.name;
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    JSZip.loadAsync(e.target.result).then(function (zip) {
+                        return zip.file("project.json").async("string").then(function (data) {
+                            const projectData = JSON.parse(data);
+                            modifyProjectData(projectData);
+
+                            zip.file("project.json", JSON.stringify(projectData, null, 2));
+                            return zip.generateAsync({ type: "blob" });
+                        });
+                    }).then(function (blob) {
+                        modifiedBlob = blob;
+                        document.getElementById('downloadButton').disabled = false;
+                    }).catch(function (err) {
+                        console.error("Error reading or modifying the file:", err);
+                    });
+                };
+                reader.readAsArrayBuffer(file);
+            }
+        }
+
+        function modifyProjectData(projectData) {
+            const extensionURLs = projectData.extensionURLs || {};
+            const sideloadExtensionURLs = projectData.sideloadExtensionURLs || {};
+            const sideloadExtensionEnvs = projectData.sideloadExtensionEnvs || {};
+
+            // Copy the extensions to the new properties
+            for (const [key, url] of Object.entries(extensionURLs)) {
+                sideloadExtensionURLs[key] = url;
+                sideloadExtensionEnvs[key] = "unsandboxed";
+            }
+
+            // Keep the original extensionURLs section
+            projectData.extensionURLs = extensionURLs;
+
+            // Add the new sideloadExtension properties
+            projectData.sideloadExtensionURLs = sideloadExtensionURLs;
+            projectData.sideloadExtensionEnvs = sideloadExtensionEnvs;
+        }
+
+        function downloadModifiedFile() {
+            if (modifiedBlob) {
+                const extension = originalFileName.split('.').pop();
+                const modifiedFileName = `modified_project.${extension}`;
+                saveAs(modifiedBlob, modifiedFileName);
+            }
+        }
+    </script>
+</body>
+</html>
