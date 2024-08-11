@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Convert Projects for Eureka Loader!</title>
-    <meta content="Embed Title" property="og:title" />
-    <meta content="Site Description" property="og:description" />
+    <meta name="description" content="Easily convert your Scratch projects for use with the Eureka Loader. Upload your .sb3 or .pmp files and download the modified project." />
+    <meta name="keywords" content="Eureka Loader, Scratch, project conversion, .sb3, .pmp, coding, programming, file conversion" />
+    <meta name="author" content="ElmoBear" />
+    <meta content="Project Converter!" property="og:title" />
+    <meta content="Easily convert your Scratch projects for use with the Eureka Loader." property="og:description" />
     <meta content="https://kylekart.github.io/tweureka/" property="og:url" />
     <meta content="https://embed.com/embedimage.png" property="og:image" />
     <meta content="#333333" data-react-helmet="true" name="theme-color" />
 
     <style>
         :root {
-            --main-color: #007BFF; /* Default color */
+            --main-color: #007BFF;
         }
         body {
             font-family: Arial, sans-serif;
@@ -31,10 +34,10 @@
         input[type="file"] {
             margin: 20px 0;
             padding: 10px;
-            border: 2px solid var(--main-color); /* Changed border color to white */
+            border: 2px solid var(--main-color);
             border-radius: 5px;
-            background-color: #333333; /* Changed background color to darker shade */
-            color: #ffffff; /* Changed text color to white */
+            background-color: #333333;
+            color: #ffffff;
             cursor: pointer;
         }
         button {
@@ -108,16 +111,12 @@
             const sideloadExtensionURLs = projectData.sideloadExtensionURLs || {};
             const sideloadExtensionEnvs = projectData.sideloadExtensionEnvs || {};
 
-            // Copy the extensions to the new properties
             for (const [key, url] of Object.entries(extensionURLs)) {
                 sideloadExtensionURLs[key] = url;
                 sideloadExtensionEnvs[key] = "unsandboxed";
             }
 
-            // Keep the original extensionURLs section
             projectData.extensionURLs = extensionURLs;
-
-            // Add the new sideloadExtension properties
             projectData.sideloadExtensionURLs = sideloadExtensionURLs;
             projectData.sideloadExtensionEnvs = sideloadExtensionEnvs;
         }
