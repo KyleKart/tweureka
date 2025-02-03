@@ -23,6 +23,7 @@
             --text-color: #ffffff;
             --shadow: rgba(0, 0, 0, 0.3) 0px 4px 6px;
             --btn-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px;
+            --animation-duration: 0.4s;
         }
 
         body {
@@ -35,23 +36,37 @@
             margin: 0;
             background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
             color: var(--text-color);
+            background-size: 200% 200%;
+            animation: gradientAnimation 6s ease infinite;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         h1 {
             color: var(--text-color);
-            margin-bottom: 20px;
-            font-size: 32px;
+            margin-bottom: 15px;
+            font-size: 28px;
             font-weight: bold;
+            text-align: center;
+            transition: transform var(--animation-duration) ease-in-out;
+        }
+
+        h1:hover {
+            transform: scale(1.1);
         }
 
         input[type="file"] {
-            margin: 20px 0;
-            padding: 15px;
+            margin: 15px 0;
+            padding: 12px;
             border: 2px solid var(--main-color);
             border-radius: 8px;
             background-color: var(--input-bg);
             color: var(--text-color);
-            font-size: 16px;
+            font-size: 14px;
             cursor: pointer;
             transition: all 0.3s ease-in-out;
             box-shadow: var(--shadow);
@@ -63,12 +78,12 @@
         }
 
         button {
-            padding: 15px 30px;
+            padding: 12px 25px;
             border: none;
             border-radius: 8px;
             background-color: var(--btn-bg);
             color: var(--text-color);
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease-in-out;
             box-shadow: var(--btn-shadow);
@@ -102,6 +117,17 @@
 
         .content {
             text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Add a more modern cursor */
+        input[type="file"], button {
+            cursor: pointer;
         }
     </style>
 </head>
