@@ -5,17 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Convert Projects for Eureka Loader!</title>
     <meta name="description" content="Easily convert your Scratch projects for use with the Eureka Loader. Upload your .sb3 or .pmp files and download the modified project." />
-    <meta name="keywords" content="Eureka Loader, Scratch, project conversion, .sb3, .pmp, coding, programming, file conversion" />
+    <meta name="keywords" content="Eureka Loader, Scratch, TurboWarp, project conversion, .sb3, .pmp, coding, programming, file conversion" />
     <meta name="author" content="ElmoBear" />
     <meta content="Tweureka Project Converter!" property="og:title" />
     <meta content="Easily convert your Scratch projects for use with the Eureka Loader." property="og:description" />
     <meta content="https://kylekart.github.io/tweureka/" property="og:url" />
-    <meta content="https://embed.com/embedimage.png" property="og:image" />
-    <meta content="#333333" data-react-helmet="true" name="theme-color" />
+    <meta content="#007BFF" data-react-helmet="true" name="theme-color" />
 
     <style>
         :root {
             --main-color: #007BFF;
+            --bg-color: #222222;
+            --input-bg: #333333;
+            --btn-bg: var(--main-color);
+            --btn-hover-bg: #0056b3;
+            --text-color: #ffffff;
         }
         body {
             font-family: Arial, sans-serif;
@@ -25,27 +29,28 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #222222;
-            color: #ffffff;
+            background-color: var(--bg-color);
+            color: var(--text-color);
         }
         h1 {
-            color: #ffffff;
+            color: var(--text-color);
+            margin-bottom: 20px;
         }
         input[type="file"] {
             margin: 20px 0;
             padding: 10px;
             border: 2px solid var(--main-color);
             border-radius: 5px;
-            background-color: #333333;
-            color: #ffffff;
+            background-color: var(--input-bg);
+            color: var(--text-color);
             cursor: pointer;
         }
         button {
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            background-color: var(--main-color);
-            color: #fff;
+            background-color: var(--btn-bg);
+            color: var(--text-color);
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s ease;
@@ -55,7 +60,7 @@
             cursor: not-allowed;
         }
         button:not(:disabled):hover {
-            background-color: var(--main-color);
+            background-color: var(--btn-hover-bg);
         }
         a {
             color: var(--main-color);
@@ -63,7 +68,7 @@
             transition: color 0.3s ease;
         }
         a:hover {
-            color: darken(var(--main-color), 10%);
+            color: #0056b3;
         }
     </style>
 </head>
@@ -123,8 +128,8 @@
 
         function downloadModifiedFile() {
             if (modifiedBlob) {
-                const extension = originalFileName.split('.').pop();
-                const modifiedFileName = `modified_project.${extension}`;
+                const fileNameWithoutExtension = originalFileName.replace(/\.[^/.]+$/, "");
+                const modifiedFileName = `eureka_${fileNameWithoutExtension}.sb3`;
                 saveAs(modifiedBlob, modifiedFileName);
             }
         }
