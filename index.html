@@ -15,15 +15,12 @@
     <style>
         :root {
             --main-color: #007BFF;
-            --bg-gradient-start: #2a2a2a;
-            --bg-gradient-end: #1a1a1a;
+            --bg-color: #1a1a1a;
             --input-bg: #333333;
             --btn-bg: var(--main-color);
             --btn-hover-bg: #0056b3;
             --text-color: #ffffff;
             --shadow: rgba(0, 0, 0, 0.3) 0px 4px 6px;
-            --btn-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px;
-            --animation-duration: 0.4s;
         }
 
         body {
@@ -34,29 +31,16 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+            background-color: var(--bg-color);
             color: var(--text-color);
-            background-size: 200% 200%;
-            animation: gradientAnimation 6s ease infinite;
-        }
-
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            text-align: center;
         }
 
         h1 {
-            color: var(--text-color);
-            margin-bottom: 15px;
-            font-size: 28px;
+            margin-bottom: 20px;
+            font-size: 30px;
             font-weight: bold;
-            text-align: center;
-            transition: transform var(--animation-duration) ease-in-out;
-        }
-
-        h1:hover {
-            transform: scale(1.1);
+            color: var(--text-color);
         }
 
         input[type="file"] {
@@ -68,7 +52,6 @@
             color: var(--text-color);
             font-size: 14px;
             cursor: pointer;
-            transition: all 0.3s ease-in-out;
             box-shadow: var(--shadow);
         }
 
@@ -85,8 +68,8 @@
             color: var(--text-color);
             font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
-            box-shadow: var(--btn-shadow);
+            box-shadow: var(--shadow);
+            transition: background-color 0.3s ease;
         }
 
         button:disabled {
@@ -97,17 +80,11 @@
 
         button:not(:disabled):hover {
             background-color: var(--btn-hover-bg);
-            transform: translateY(-2px);
-        }
-
-        button:not(:disabled):active {
-            transform: translateY(0);
         }
 
         a {
             color: var(--main-color);
             text-decoration: none;
-            transition: color 0.3s ease;
             font-weight: bold;
         }
 
@@ -115,28 +92,12 @@
             color: #0056b3;
         }
 
-        .content {
-            text-align: center;
-            animation: fadeIn 1s ease-out;
-        }
-
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        /* Add a more modern cursor */
-        input[type="file"], button {
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
-    <div class="content">
-        <h1>Convert your Project for the <a href="https://eureka.codingclip.cc/" target="_blank">Eureka Loader</a>!</h1>
-        <input type="file" id="fileInput" accept=".sb3,.pmp">
-        <button id="downloadButton" disabled>Convert Project</button>
-    </div>
+    <h1>Convert your Project for the <a href="https://eureka.codingclip.cc/" target="_blank">Eureka Loader</a>!</h1>
+    <input type="file" id="fileInput" accept=".sb3,.pmp">
+    <button id="downloadButton" disabled>Convert Project</button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
